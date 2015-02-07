@@ -8,7 +8,7 @@ $(function(){
     var Models = {};
     //instanciadas
     var views = {};
-    var models = {}
+    var models = {};
 
     var map;
 
