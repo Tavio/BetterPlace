@@ -53,8 +53,8 @@ var Views = {};
 
                 findPlaces(resultlatLng, function(results) {
                     results.forEach(function(result) {
-                        var placeLat = result.geometry.location.lat;
-                        var placeLng = result.geometry.location.lng;
+                        var placeLat = result.geometry.location.k;
+                        var placeLng = result.geometry.location.D;
                         var placelatLng = new google.maps.LatLng(placeLat, placeLng);
 
                         addMarker(placelatLng);
