@@ -31,17 +31,18 @@ $(function(){
                 var resultLng = result.geometry.location.lng;
                 var resultlatLng = new google.maps.LatLng(resultLat, resultLng);
 
-                mapsHandler.addMarker(resultlatLng);
+                mapsHandler.addAddressMarker(resultlatLng);
 
                 mapsHandler.map.panTo(resultlatLng);
+                mapsHandler.clearPlaceMarkers();
 
                 mapsHandler.findPlaces(resultlatLng, models.placesFilters.extractData(), function(results) {
                     results.forEach(function(result) {
                         var placeLat = result.geometry.location.k || geometry.location.lat;
                         var placeLng = result.geometry.location.D || geometry.location.lng;
                         var placelatLng = new google.maps.LatLng(placeLat, placeLng);
-
-                        mapsHandler.addMarker(placelatLng);
+                        var iconUrl = "img/" + result.types[0] + ".png";
+                        mapsHandler.addPlaceMarker(placelatLng, iconUrl);
                     });
                 });
 
@@ -70,25 +71,25 @@ $(function(){
 
     Models.PlacesFilters = Backbone.Model.extend({
         defaults: {
-            schools: {
+            school: {
                 state:true,
                 name: 'Escolas'
             },
-            transportation: {
+            bus_station: {
                 state:true,
                 name: 'Transporte Público'
             },
-            entertainment: {
+            gym: {
                 state: true,
-                name: 'Entertenimento'
+                name: 'Academias'
             },
-            hospital: {
+            health: {
                 state: true,
                 name: 'Hospital'
             },
-            sports: {
+            park: {
                 state: true,
-                name: 'Atividades físicas'
+                name: 'Parques'
             },
             store: {
                 state: true,
@@ -131,11 +132,38 @@ function MapsHandler(container) {
         mapOptions);
     var placesService = new google.maps.places.PlacesService(map);
 
+    var placeMarkers = [];
+    var addressMarker;
 
-    function addMarker(latLng) {
-        var marker = new google.maps.Marker({
+    function addAddressMarker(latLng) {
+        if(addressMarker) {
+            addressMarker.setMap(null);
+        }
+
+        addressMarker= addMarker(latLng);
+    }
+
+    function addPlaceMarker(latLng, icon) {
+        placeMarkers.push(addMarker(latLng, icon));
+    }
+
+    function addMarker(latLng, icon) {
+
+        var markerOptions = {
             position: latLng,
             map: map
+        };
+
+        if(icon) {
+            markerOptions.icon = icon;
+        }
+
+        return new google.maps.Marker(markerOptions);
+    }
+
+    function clearPlaceMarkers() {
+        placeMarkers.forEach(function(marker) {
+           marker.setMap(null);
         });
     }
 
@@ -170,7 +198,9 @@ function MapsHandler(container) {
 
     return {
         geoLocate: geoLocate,
-        addMarker: addMarker,
+        addAddressMarker: addAddressMarker,
+        addPlaceMarker: addPlaceMarker,
+        clearPlaceMarkers: clearPlaceMarkers,
         findPlaces: findPlaces,
         map: map
     }
