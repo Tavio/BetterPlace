@@ -16,6 +16,8 @@ import br.com.betterplace.web.security.BetterPlaceGenericController;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 
+import java.math.BigDecimal;
+
 @Controller
 @RequestMapping(value = "/private/review")
 public class ReviewController extends BetterPlaceGenericController {
@@ -29,8 +31,8 @@ public class ReviewController extends BetterPlaceGenericController {
     @RequestMapping(value = "/", method = RequestMethod.PUT, headers = "Accept=application/json", produces = "application/json")
     @ApiOperation(value = "")
     public ResponseEntity list(
-            @RequestParam(value = "latitude") Float latitude,
-            @RequestParam(value = "longitude") Float longitude,
+            @RequestParam(value = "latitude") BigDecimal latitude,
+            @RequestParam(value = "longitude") BigDecimal longitude,
             @RequestParam(value = "neighborhoodName") String neighborhoodName,
             @RequestParam(value = "reviewerName") String reviewerName,
             @RequestParam(value = "reviewerEmail") String reviewerEmail,
