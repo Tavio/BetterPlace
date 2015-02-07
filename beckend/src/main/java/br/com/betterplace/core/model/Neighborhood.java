@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "neighborhood")
@@ -20,10 +21,10 @@ public class Neighborhood {
     private String name;
 
     @Column(name = "latitude", nullable = false)
-    private Float latitude;
+    private BigDecimal latitude;
 
     @Column(name = "longitude", nullable = false)
-    private Float longitude;
+    private BigDecimal longitude;
 
     public Integer getId() {
         return id;
@@ -41,19 +42,19 @@ public class Neighborhood {
         this.name = name;
     }
 
-    public Float getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public Float getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 }

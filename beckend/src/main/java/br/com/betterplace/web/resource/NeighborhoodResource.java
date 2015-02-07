@@ -1,9 +1,10 @@
 package br.com.betterplace.web.resource;
 
-import java.io.Serializable;
-
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 @SuppressWarnings("serial")
 @ApiModel
@@ -16,10 +17,10 @@ public class NeighborhoodResource implements Serializable {
     private String name;
 
     @ApiModelProperty
-    private Float latitude;
+    private BigDecimal latitude;
 
     @ApiModelProperty
-    private Float longitude;
+    private BigDecimal longitude;
 
     public Integer getId() {
         return id;
@@ -37,19 +38,19 @@ public class NeighborhoodResource implements Serializable {
         this.name = name;
     }
 
-    public Float getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public Float getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 }
