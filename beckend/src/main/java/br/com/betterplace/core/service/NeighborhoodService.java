@@ -5,6 +5,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -28,7 +29,7 @@ public class NeighborhoodService extends AbstractService {
     }
 
     @Transactional(readOnly = false)
-    public Neighborhood getOrCreate(Float latitude, Float longitude, String neighborhoodName) {
+    public Neighborhood getOrCreate(BigDecimal latitude, BigDecimal longitude, String neighborhoodName) {
         List<Neighborhood> neighborhoods = this.readByName(neighborhoodName);
         if (neighborhoods == null || neighborhoods.isEmpty()) {
             Neighborhood neighborhood = new Neighborhood();
