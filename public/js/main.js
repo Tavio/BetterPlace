@@ -42,7 +42,7 @@ $(function(){
                         var placeLng = result.geometry.location.D || geometry.location.lng;
                         var placelatLng = new google.maps.LatLng(placeLat, placeLng);
                         var iconUrl = "img/" + result.types[0] + ".png";
-                        mapsHandler.addPlaceMarker(placelatLng, iconUrl);
+                        mapsHandler.addPlaceMarker(placelatLng, iconUrl, result);
                     });
                 });
 
@@ -143,8 +143,20 @@ function MapsHandler(container) {
         addressMarker= addMarker(latLng);
     }
 
-    function addPlaceMarker(latLng, icon) {
-        placeMarkers.push(addMarker(latLng, icon));
+    function addPlaceMarker(latLng, icon, place) {
+        var marker = addMarker(latLng, icon);
+        placeMarkers.push(marker);
+        addPlaceInfo(place, marker)
+    }
+
+    function addPlaceInfo(place, marker) {
+        var content = 'hahaha';
+        var infowindow = new google.maps.InfoWindow({
+            content: content
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+        });
     }
 
     function addMarker(latLng, icon) {
