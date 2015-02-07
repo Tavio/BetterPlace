@@ -19,7 +19,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 //@EnableWebSecurity
-@ComponentScan(basePackages = { "br.com.betterplace" })
+@ComponentScan(basePackages = {"br.com.betterplace"})
 public class ApiDispatcherConfig extends WebMvcConfigurerAdapter {
 
     /**
