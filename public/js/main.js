@@ -150,7 +150,7 @@ function MapsHandler(container) {
     }
 
     function addPlaceInfo(place, marker) {
-        var content = 'hahaha';
+        var content = '<div id="title"><h3>' + place.name + '</h3>';
         var infowindow = new google.maps.InfoWindow({
             content: content
         });
