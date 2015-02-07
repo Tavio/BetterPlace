@@ -12,6 +12,41 @@ $(function(){
 
     var map;
 
+    var typesMap = {
+        "school" 					: "school",
+        "university" 				: "school",
+        "bus_station" 				: "bus_station",
+        "subway_station"			: "bus_station",
+        "airport" 					: "bus_station",
+        "taxi_stand" 				: "bus_station",
+        "train_station" 			: "bus_station",
+        "gym" 						: "gym",
+        "spa" 						: "gym",
+        "health" 					: "health",
+        "doctor" 					: "health",
+        "hospital" 					: "health",
+        "physiotherapist" 			: "health",
+        "veterinary_care" 			: "health",
+        "park" 						: "park",
+        "store" 					: "store",
+        "bakery"					: "store",
+        "bar" 						: "store",
+        "beauty_salon"				: "store",
+        "bicycle_store"				: "store",
+        "book_store"				: "store",
+        "car_dealer"				: "store",
+        "clothing_store"			: "store",
+        "convenience_store"			: "store",
+        "department_store"			: "store",
+        "electronics_store"			: "store",
+        "furniture_store"			: "store",
+        "grocery_or_supermarket"	: "store",
+        "hardware_store"			: "store",
+        "home_goods_store"			: "store",
+        "shoe_store"				: "store",
+        "shopping_mall"				: "store"
+    };
+
     Views.AddressQuery = Backbone.View.extend({
         el: $('.address_query'),
         events: {
@@ -41,7 +76,7 @@ $(function(){
                         var placeLat = result.geometry.location.k || geometry.location.lat;
                         var placeLng = result.geometry.location.D || geometry.location.lng;
                         var placelatLng = new google.maps.LatLng(placeLat, placeLng);
-                        var iconUrl = "img/" + result.types[0] + ".png";
+                        var iconUrl = "img/" + typesMap[result.types[0]] + ".png";
                         mapsHandler.addPlaceMarker(placelatLng, iconUrl, result);
                     });
                 });
