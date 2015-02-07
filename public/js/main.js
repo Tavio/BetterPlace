@@ -6,7 +6,6 @@ $(function(){
     var Views = {};
 
     var map;
-    var placesService;
 
     Views.AddressQuery = Backbone.View.extend({
         el: $('.address_query'),
@@ -33,12 +32,14 @@ $(function(){
 
                 mapsHandler.addMarker(resultlatLng);
 
-                map.panTo(resultlatLng);
+                mapsHandler.map.panTo(resultlatLng);
 
                 mapsHandler.findPlaces(resultlatLng, function(results) {
+                    console.log('places', result)
                     results.forEach(function(result) {
-                        var placeLat = result.geometry.location.lat;
-                        var placeLng = result.geometry.location.lng;
+                        console.log(result)
+                        var placeLat = result.geometry.location.k;
+                        var placeLng = result.geometry.location.D;
                         var placelatLng = new google.maps.LatLng(placeLat, placeLng);
 
                         mapsHandler.addMarker(placelatLng);
@@ -48,19 +49,6 @@ $(function(){
             });
         }
     });
-
-    function initialize() {
-       var startingPos = new Location({lat:-23.5290087,lng:-46.6790629});
-
-        var mapOptions = {
-            center: new google.maps.LatLng(startingPos.get('lat'), startingPos.get('lng')),
-            zoom: 15
-        };
-        map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-        placesService = new google.maps.places.PlacesService(map);
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
 
     new Views.AddressQuery();
 
@@ -124,7 +112,8 @@ function MapsHandler(container) {
     return {
         geoLocate: geoLocate,
         addMarker: addMarker,
-        findPlaces: findPlaces
+        findPlaces: findPlaces,
+        map: map
     }
 }
 var mapsHandler;
