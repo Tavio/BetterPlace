@@ -16,9 +16,11 @@
         <property name="hibernate.connection.autocommit">false</property>
         <property name="hibernate.order_inserts">true</property>
         <property name="hibernate.order_updates">true</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</property>
 
-        <mapping class="br.com.betterplace.core.model.Manufacturer" />
+        <mapping class="br.com.betterplace.core.model.Neighborhood" />
+        <mapping class="br.com.betterplace.core.model.Review" />
 
     </session-factory>
 </hibernate-configuration>
