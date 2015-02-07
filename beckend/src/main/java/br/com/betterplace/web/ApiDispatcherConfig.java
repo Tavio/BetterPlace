@@ -64,10 +64,10 @@ public class ApiDispatcherConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/lib/**").addResourceLocations("/swagger/lib/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/swagger/css/");
-        registry.addResourceHandler("/images/**").addResourceLocations("/swagger/images/");
-        registry.addResourceHandler("/*.js").addResourceLocations("/swagger/");
+        registry.addResourceHandler("/docs/lib/**").addResourceLocations("/swagger/lib/");
+        registry.addResourceHandler("/docs/css/**").addResourceLocations("/swagger/css/");
+        registry.addResourceHandler("/docs/images/**").addResourceLocations("/swagger/images/");
+        registry.addResourceHandler("/docs/*.js").addResourceLocations("/swagger/");
     }
 
     /**
@@ -76,7 +76,7 @@ public class ApiDispatcherConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        ViewControllerRegistration addViewController = registry.addViewController("/");
+        ViewControllerRegistration addViewController = registry.addViewController("/docs/");
         addViewController.setViewName("index");
     }
 }

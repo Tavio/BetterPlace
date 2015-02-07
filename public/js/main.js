@@ -3,27 +3,28 @@
  */
 
 $(function(){
+    //constructors
     var Views = {};
+    var Models = {};
+    //instanciadas
+    var views = {};
+    var models = {};
 
     var map;
 
     Views.AddressQuery = Backbone.View.extend({
         el: $('.address_query'),
-
         events: {
             'click button': 'submitAddress'
         },
-
         initialize: function() {
-            console.log('initialize', this.$el);
             mapsHandler = new MapsHandler('map-canvas');
         },
-
         render: function() {
         },
         submitAddress: function(){
             var address = this.$el.find('.address').val();
-            console.log(mapsHandler)
+
             mapsHandler.geoLocate(address, function(data) {
                 var result = data.results[0];
                 var resultLat = result.geometry.location.lat;
@@ -34,12 +35,10 @@ $(function(){
 
                 mapsHandler.map.panTo(resultlatLng);
 
-                mapsHandler.findPlaces(resultlatLng, function(results) {
-                    console.log('places', result)
+                mapsHandler.findPlaces(resultlatLng, models.placesFilters.extractData(), function(results) {
                     results.forEach(function(result) {
-                        console.log(result)
-                        var placeLat = result.geometry.location.k;
-                        var placeLng = result.geometry.location.D;
+                        var placeLat = result.geometry.location.k || geometry.location.lat;
+                        var placeLng = result.geometry.location.D || geometry.location.lng;
                         var placelatLng = new google.maps.LatLng(placeLat, placeLng);
 
                         mapsHandler.addMarker(placelatLng);
@@ -49,9 +48,69 @@ $(function(){
             });
         }
     });
+    Views.PlacesFilters = Backbone.View.extend({
+        el: $('.places_filter'),
+        events: {
+            'change [type=checkbox]': 'saveToModel'
+        },
+        template: _.template($('#places_filter_template').html()),
+        initialize: function(model) {
+            this.model = model;
+            this.render();
+        },
+        render: function(){
+            this.$el.html(this.template({model:this.model}));
+            return this;
+        },
+        saveToModel: function(e) {
+            this.model.set(e.target.value, {name: e.target.dataset.name, state: e.target.checked});
+        }
 
-    new Views.AddressQuery();
+    });
 
+    Models.PlacesFilters = Backbone.Model.extend({
+        defaults: {
+            schools: {
+                state:true,
+                name: 'Escolas'
+            },
+            transportation: {
+                state:true,
+                name: 'Transporte Público'
+            },
+            entertainment: {
+                state: true,
+                name: 'Entertenimento'
+            },
+            hospital: {
+                state: true,
+                name: 'Hospital'
+            },
+            sports: {
+                state: true,
+                name: 'Atividades físicas'
+            },
+            store: {
+                state: true,
+                name: 'Comércio'
+            }
+        },
+
+        extractData: function() {
+            var retorno = [];
+            _.each(this.attributes, function(filtro, key) {
+               if (filtro.state) retorno.push(key);
+            });
+            return retorno;
+        }
+
+
+    });
+
+    models.placesFilters = new Models.PlacesFilters();
+
+    views.addressQuery = new Views.AddressQuery();
+    views.placesFilters = new Views.PlacesFilters(models.placesFilters);
 });
 
 function MapsHandler(container) {
@@ -80,11 +139,11 @@ function MapsHandler(container) {
         });
     }
 
-    function findPlaces(latLng, successCallback) {
+    function findPlaces(latLng, types, successCallback) {
         var request = {
             location: latLng,
             radius: '500',
-            types: ['store']
+            types: types
         };
 
         placesService.search(request, function(results) {
@@ -117,4 +176,3 @@ function MapsHandler(container) {
     }
 }
 var mapsHandler;
-//google.maps.event.addDomListener(window, 'load', );
