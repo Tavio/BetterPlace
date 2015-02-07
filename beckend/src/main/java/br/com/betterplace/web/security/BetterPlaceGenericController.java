@@ -1,18 +1,16 @@
 package br.com.betterplace.web.security;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
+import br.com.betterplace.core.service.ServiceException;
+import br.com.betterplace.web.adapter.Adapters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import br.com.betterplace.core.service.ServiceException;
-import br.com.betterplace.web.adapter.Adapters;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 
-public abstract class BetterPlaceGenericController extends CasPrivateController {
+public abstract class BetterPlaceGenericController {
 
     protected static final String MAV_ATTR_COUNT = "count";
 

@@ -1,12 +1,11 @@
 package br.com.betterplace.core.service;
 
-import java.util.List;
-
+import br.com.betterplace.core.model.Neighborhood;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.betterplace.core.model.Neighborhood;
+import java.util.List;
 
 @Service
 public class NeighborhoodService extends AbstractService {
@@ -28,6 +27,7 @@ public class NeighborhoodService extends AbstractService {
                 .list();
     }
 
+    @Transactional(readOnly = false)
     public Neighborhood getOrCreate(Float latitude, Float longitude, String neighborhoodName) {
         List<Neighborhood> neighborhoods = this.readByName(neighborhoodName);
         if (neighborhoods == null || neighborhoods.isEmpty()) {
